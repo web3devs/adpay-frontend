@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { setGlobal } from 'reactn';
 import ReactDOM from 'react-dom';
-import Form from './Form';
+
+import App from './components/App';
 import './index.css';
 
-function App() {
-  // const market = this.props
-  return (
-    <div>
-      <Form />
-    </div>
-  );
-}
+setGlobal({
+  authenticated: true,
+  name: '',
+  clientId: null,
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
