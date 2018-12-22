@@ -4,10 +4,15 @@
     "index": "./index.js"
   },
   "dependencies": {
+    "@material-ui/core": "^3.7.0",
+    "@material-ui/icons": "^3.0.1",
     "antd": "^3.0.0",
+    "classnames": "^2.2.6",
     "moment": "^2.19.3",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
+    "reactn": "^0.1.8",
     "superagent": "^4.0.0-beta.5"
   },
   "devDependencies": {
