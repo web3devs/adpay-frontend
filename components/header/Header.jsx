@@ -29,10 +29,7 @@ const styles = theme => ({
     marginRight: 20,
   },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    display: 'block',
   },
   search: {
     position: 'relative',
@@ -110,6 +107,14 @@ class Header extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+  handleLogout = () => {
+    this.setGlobal({
+      authenticated: false,
+      name: '',
+    });
+    this.handleMenuClose();
+  }
+
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -124,8 +129,8 @@ class Header extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
       </Menu>
     );
 
@@ -166,55 +171,37 @@ class Header extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
-            </IconButton> */}
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               Ad Pay
             </Typography>
-
-            {/* <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
-            </div> */}
               <div className={classes.grow} />
-              <div className={classes.sectionDesktop}>
-                { this.global.authenticated &&
-                  <div>
-                    <IconButton color="inherit">
-                      <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                      </Badge>
-                    </IconButton>
-                    <IconButton color="inherit">
-                      <Badge badgeContent={17} color="secondary">
-                        <NotificationsIcon />
-                      </Badge>
-                    </IconButton>
-                    <IconButton
-                      aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                      aria-haspopup="true"
-                      onClick={this.handleProfileMenuOpen}
-                      color="inherit"
-                    >
-                      <AccountCircle />
+              { this.global.authenticated &&
+                <div className={classes.sectionDesktop}>
+                  <IconButton color="inherit">
+                    <Badge badgeContent={4} color="secondary">
+                      <MailIcon />
+                    </Badge>
+                  </IconButton>
+                  <IconButton color="inherit">
+                    <Badge badgeContent={17} color="secondary">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                  <IconButton
+                    aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <div className={classes.sectionMobile}>
+                    <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+                      <MoreIcon />
                     </IconButton>
                   </div>
-                }
-              </div>
-              <div className={classes.sectionMobile}>
-                <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                  <MoreIcon />
-                </IconButton>
-              </div>
+                </div>
+              }
           </Toolbar>
         </AppBar>
         {renderMenu}

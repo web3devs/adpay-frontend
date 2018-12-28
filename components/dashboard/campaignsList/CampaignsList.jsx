@@ -44,6 +44,7 @@ const cardsData = [
 export default function CampaignList(props) {
   const list = cardsData.map((card) => {
     return <CampaignCard
+      key={card.title} // TODO use Id
       title={card.title}
       date={card.date}
       picture={card.picture}

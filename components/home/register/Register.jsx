@@ -9,7 +9,9 @@ import Button from '@material-ui/core/Button';
 const styles = theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textField: {
     marginLeft: theme.spacing.unit,

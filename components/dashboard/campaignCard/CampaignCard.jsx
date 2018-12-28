@@ -27,11 +27,15 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
-  card: {
-    // maxWidth: 400,
-    margin: '10px 0',
+  cardRow: {
+    margin: theme.spacing.unit * 2,
     display: 'flex',
     flexDirection: 'row'
+  },
+  cardCol: {
+    margin: theme.spacing.unit * 2,
+    display: 'flex',
+    flexDirection: 'column',
   },
   media: {
     height: 0,
@@ -57,8 +61,8 @@ const styles = theme => ({
   //   backgroundColor: red[500],
   // },
   video: {
-    height: '30vw', //TODO take aspect ratio as props
-    width: '50vw',
+    // height: '30vw', //TODO take aspect ratio as props
+    width: '100%',
     border: '1px solid black',
     objectFit: 'contain',
     // flex-shrink: 0;
@@ -93,6 +97,7 @@ class CampaignCard extends React.Component {
   };
 
   render() {
+    console.log('WINDOW.INNERWIDTH', window.innerWidth);
     const { classes, title, date, picture, videoM4a, videoWebm, viewN, funded, price, paid } = this.props;
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
@@ -108,62 +113,83 @@ class CampaignCard extends React.Component {
         <MenuItem onClick={this.handleMenuClose}>Edit</MenuItem>
       </Menu>
     );
+    const video = (
+      <video poster={picture} alt="Video" controls ref="video" className={classes.video}>
+        <source src={videoM4a} type="video/mp4" />
+        <source src={videoWebm} type="video/webm" />
+        Your browser does not support the video types.
+      </video>
+    );
+    const cardHeader = (
+      <CardHeader
+        action={
+          <IconButton aria-haspopup="true" onClick={this.handleProfileMenuOpen} color="inherit">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title={title}
+        subheader={date}
+      />
+    );
+    const cardContent = (
+      <CardContent>
+        <div className={classes.root}>
+          <List component="nav">
+            <ListItem button>
+              <ListItemIcon>
+                <Videocam />
+              </ListItemIcon>
+              <ListItemText primary="Times Viewed" />
+              <ListItemText primary={viewN} className={classes.flexEnd} />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <DraftsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Funded Amount" />
+              <ListItemText primary={funded} className={classes.flexEnd} />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Price per View" />
+              <ListItemText primary={price} className={classes.flexEnd} />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Total Paid" />
+              <ListItemText primary={paid} className={classes.flexEnd} />
+            </ListItem>
+          </List>
+        </div>
+      </CardContent>
+    );
 
     return (
-      <Card className={classes.card}>
-        <video poster={picture} alt="Video" controls ref="video" className={classes.video}>
-          <source src={videoM4a} type="video/mp4" />
-          <source src={videoWebm} type="video/webm" />
-          Your browser does not support the video types.
-        </video>
-        <div style={{ width: '100%' }}>
-          <CardHeader
-            action={
-              <IconButton aria-haspopup="true" onClick={this.handleProfileMenuOpen} color="inherit">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={title}
-            subheader={date}
-          />
-          {renderMenu}
-          <CardContent>
-            <div className={classes.root}>
-              <List component="nav">
-                <ListItem button>
-                  <ListItemIcon>
-                    <Videocam />
-                  </ListItemIcon>
-                  <ListItemText primary="Times Viewed" />
-                  <ListItemText primary={viewN} className={classes.flexEnd} />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                    <DraftsIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Funded Amount" />
-                  <ListItemText primary={funded} className={classes.flexEnd} />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                    <InboxIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Price per View" />
-                  <ListItemText primary={price} className={classes.flexEnd} />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                    <InboxIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Total Paid" />
-                  <ListItemText primary={paid} className={classes.flexEnd} />
-                </ListItem>
-              </List>
+      <div>
+        { window.innerWidth > '700' ?
+          <Card className={classes.cardRow}>
+            <div style={{ width: '100%' }}>
+              {video}
             </div>
-          </CardContent>
-        </div>
-
-      </Card>
+            <div style={{ width: '100%' }}>
+              {cardHeader}
+              {renderMenu}
+              {cardContent}
+            </div>
+          </Card>
+        :
+          <Card className={classes.cardCol}>
+            {cardHeader}
+            {renderMenu}
+            {video}
+            {cardContent}
+          </Card>
+        }
+      </div>
     );
   }
 }
