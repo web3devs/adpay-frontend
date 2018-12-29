@@ -113,7 +113,7 @@ class Header extends React.Component {
       name: '',
     });
     this.handleMenuClose();
-  }
+  };
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
@@ -171,37 +171,46 @@ class Header extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              color="inherit"
+              noWrap
+            >
               Ad Pay
             </Typography>
-              <div className={classes.grow} />
-              { this.global.authenticated &&
-                <div className={classes.sectionDesktop}>
-                  <IconButton color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                      <MailIcon />
-                    </Badge>
-                  </IconButton>
-                  <IconButton color="inherit">
-                    <Badge badgeContent={17} color="secondary">
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
+            <div className={classes.grow} />
+            {this.global.authenticated && (
+              <div className={classes.sectionDesktop}>
+                <IconButton color="inherit">
+                  <Badge badgeContent={4} color="secondary">
+                    <MailIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton color="inherit">
+                  <Badge badgeContent={17} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <div className={classes.sectionMobile}>
                   <IconButton
-                    aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                     aria-haspopup="true"
-                    onClick={this.handleProfileMenuOpen}
+                    onClick={this.handleMobileMenuOpen}
                     color="inherit"
                   >
-                    <AccountCircle />
+                    <MoreIcon />
                   </IconButton>
-                  <div className={classes.sectionMobile}>
-                    <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                      <MoreIcon />
-                    </IconButton>
-                  </div>
                 </div>
-              }
+              </div>
+            )}
           </Toolbar>
         </AppBar>
         {renderMenu}

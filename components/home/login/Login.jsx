@@ -25,7 +25,7 @@ const styles = theme => ({
     width: 200,
   },
   button: {
-  margin: theme.spacing.unit,
+    margin: theme.spacing.unit,
   },
   input: {
     display: 'none',
@@ -56,7 +56,7 @@ class Login extends React.Component {
       authenticated: true,
       name: 'Sam',
     });
-  }
+  };
 
   render() {
     const { classes } = this.props;

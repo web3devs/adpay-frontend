@@ -30,7 +30,7 @@ const styles = theme => ({
   cardRow: {
     margin: theme.spacing.unit * 2,
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   cardCol: {
     margin: theme.spacing.unit * 2,
@@ -98,7 +98,19 @@ class CampaignCard extends React.Component {
 
   render() {
     console.log('WINDOW.INNERWIDTH', window.innerWidth);
-    const { classes, title, date, picture, videoM4a, videoWebm, viewN, funded, price, paid } = this.props;
+    const {
+      classes,
+      title,
+      date,
+      iFrame,
+      picture,
+      videoM4a,
+      videoWebm,
+      viewN,
+      funded,
+      price,
+      paid,
+    } = this.props;
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
     const renderMenu = (
@@ -114,16 +126,39 @@ class CampaignCard extends React.Component {
       </Menu>
     );
     const video = (
-      <video poster={picture} alt="Video" controls ref="video" className={classes.video}>
-        <source src={videoM4a} type="video/mp4" />
-        <source src={videoWebm} type="video/webm" />
-        Your browser does not support the video types.
-      </video>
+      <div>
+        {iFrame ? (
+          <iframe
+            width="560"
+            height="315"
+            src={videoWebm}
+            frameBorder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          <video
+            poster={picture}
+            alt="Video"
+            controls
+            // ref="video"
+            className={classes.video}
+          >
+            <source src={videoM4a} type="video/mp4" />
+            <source src={videoWebm} type="video/webm" />
+            Your browser does not support the video types.
+          </video>
+        )}
+      </div>
     );
     const cardHeader = (
       <CardHeader
         action={
-          <IconButton aria-haspopup="true" onClick={this.handleProfileMenuOpen} color="inherit">
+          <IconButton
+            aria-haspopup="true"
+            onClick={this.handleProfileMenuOpen}
+            color="inherit"
+          >
             <MoreVertIcon />
           </IconButton>
         }
@@ -170,25 +205,23 @@ class CampaignCard extends React.Component {
 
     return (
       <div>
-        { window.innerWidth > '700' ?
+        {window.innerWidth > '700' ? (
           <Card className={classes.cardRow}>
-            <div style={{ width: '100%' }}>
-              {video}
-            </div>
+            <div style={{ width: '100%' }}>{video}</div>
             <div style={{ width: '100%' }}>
               {cardHeader}
               {renderMenu}
               {cardContent}
             </div>
           </Card>
-        :
+        ) : (
           <Card className={classes.cardCol}>
             {cardHeader}
             {renderMenu}
             {video}
             {cardContent}
           </Card>
-        }
+        )}
       </div>
     );
   }
@@ -196,6 +229,16 @@ class CampaignCard extends React.Component {
 
 CampaignCard.propTypes = {
   classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string,
+  iFrame: PropTypes.bool,
+  picture: PropTypes.string,
+  videoM4a: PropTypes.string,
+  videoWebm: PropTypes.string,
+  viewN: PropTypes.number.isRequired,
+  funded: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  paid: PropTypes.number.isRequired,
 };
 
 export default withStyles(styles)(CampaignCard);

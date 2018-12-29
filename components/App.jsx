@@ -6,16 +6,11 @@ import Dashboard from './dashboard/Dashboard';
 import Home from './home/Home';
 
 export default function App() {
-  const [ authenticated, setAuth ] = useGlobal('authenticated');
-  console.log('AUTHENTICATED', authenticated);
+  const [authenticated, setAuth] = useGlobal('authenticated');
   return (
     <div>
       <Header />
-      { authenticated ?
-          <Dashboard />
-        :
-          <Home />
-      }
+      {authenticated ? <Dashboard /> : <Home />}
     </div>
   );
 }

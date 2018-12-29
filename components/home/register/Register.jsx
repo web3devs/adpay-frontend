@@ -46,7 +46,7 @@ class Register extends React.Component {
 
   handleRegister = event => {
     // send to server
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -81,11 +81,7 @@ class Register extends React.Component {
           margin="normal"
           variant="outlined"
         />
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-        >
+        <Button variant="contained" color="primary" className={classes.button}>
           Register
         </Button>
       </form>

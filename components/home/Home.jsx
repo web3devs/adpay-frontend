@@ -33,35 +33,27 @@ const styles = theme => ({
 });
 
 function Home(props) {
-
-  const [ register, setRegister ] = useState(false);
+  const [register, setRegister] = useState(false);
   const { classes } = props;
 
   return (
     <Grid container className={classes.root} spacing={16}>
-      <Grid item xs={12} sm={8} md={6} >
+      <Grid item xs={12} sm={8} md={6}>
         <Paper className={classes.paper}>
           <FormGroup className={classes.formRow}>
             <FormControlLabel
               control={
                 <Switch
-                    checked={register}
-                    onChange={() => setRegister(!register)}
-                    value="register"
-                    color="default"
-                  />
+                  checked={register}
+                  onChange={() => setRegister(!register)}
+                  value="register"
+                  color="default"
+                />
               }
-              label={register ? "Register" : "Login"}
-            >
-            </FormControlLabel>
+              label={register ? 'Register' : 'Login'}
+            />
           </FormGroup>
-          <FormGroup>
-            { register ?
-              <Register />
-              :
-              <Login />
-            }
-          </FormGroup>
+          <FormGroup>{register ? <Register /> : <Login />}</FormGroup>
         </Paper>
       </Grid>
     </Grid>
